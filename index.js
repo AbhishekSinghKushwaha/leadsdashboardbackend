@@ -1,8 +1,8 @@
 const express = require('express');
-// const bodyParser = require('body-parser');
 const cors = require('cors');
+var mongoose = require("mongoose");
+var dotenv = require('dotenv');
 
-const { mongoose } = require('./db.js');
 var leadsController = require('./controllers/leadsController');
 var userController = require('./controllers/userController');
 var todoController = require('./controllers/todoController');
@@ -11,17 +11,14 @@ var segmentController = require('./controllers/segmentController');
 var tagsController = require('./controllers/tagsController');
 var awsController = require('./controllers/awsController');
 
-var app = express();
-
-app.use(express.urlencoded({
-    extended: true
-  }));
+const app = express();
+dotenv.config();
 
 app.use(express.json());
 
-app.use(cors({origin:'http://localhost:3000'}));
+app.use(express.urlencoded({extended: true}));
 
-app.listen(5000, () => console.log('Server started at port : 5000'));
+app.use(cors({origin:'http://localhost:3000'}));
 
 app.use('/leadsdashboard',leadsController);
 app.use('/user',userController);
@@ -30,3 +27,11 @@ app.use('/campaign', campaignController);
 app.use('/segment', segmentController);
 app.use('/tag', tagsController);
 app.use('/aws', awsController);
+
+const PORT = process.env.PORT || 5000;
+
+mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)))
+  .catch((error) => console.log(`${error} did not connect`));
+
+mongoose.set('useFindAndModify', false);
