@@ -18,7 +18,6 @@ router.get('/', (req,res)=>{
 /////////// FILTER //////////////
 router.post('/filtertags', async(req, res) => {
     const {ftag} = req.body;
-    console.log(req.body);
 
     var rtag = new RegExp(ftag, 'i');
 
@@ -27,7 +26,6 @@ router.post('/filtertags', async(req, res) => {
     .exec((err,docs) => { 
         if (!err) { 
             res.send(docs);
-            console.log(docs)
             }	
         else { console.log('Error in retriving data:'+JSON.stringify(err,undefined,2))};
     });
@@ -49,7 +47,6 @@ router.get('/:id', auth, (req, res) => {
 /////////// POST ///////////////
 router.post('/', auth, (req, res) => {
     const post = req.body;
-    console.log(post)
     const tag = new tags({...post, creator: req.userId, createdAt: new Date().toISOString()})
 
     tag.save((err, doc) => {

@@ -18,7 +18,6 @@ router.get('/', (req, res)=>{
 /////////// FILTER //////////////
 router.post('/filtersegment', async(req, res) => {
     const {fsegment} = req.body;
-    console.log(req.body);
 
     var rsegment = new RegExp(fsegment, 'i');
 
@@ -27,7 +26,6 @@ router.post('/filtersegment', async(req, res) => {
     .exec((err,docs) => { 
         if (!err) { 
             res.send(docs);
-            console.log(docs)
             }	
         else { console.log('Error in retriving data:'+JSON.stringify(err,undefined,2))};
     });
@@ -48,7 +46,6 @@ router.get('/:id', auth, (req, res) => {
 /////////// POST ///////////////
 router.post('/', auth, (req, res) => {
     const post = req.body;
-    console.log(post)
     const segment = new segments({...post, creator: req.userId, createdAt: new Date().toISOString()})
     segment.save((err, doc) => {
         if (!err) { res.send(doc); }
@@ -57,6 +54,7 @@ router.post('/', auth, (req, res) => {
             console.log('Error in segments Save :' + JSON.stringify(err, undefined, 2)); }
     });
 });
+
 
 /////////// PUT ////////////////
 router.put('/:id', auth, (req,res) => {

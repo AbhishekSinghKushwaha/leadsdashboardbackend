@@ -29,7 +29,6 @@ router.get('/:id', auth, (req, res) => {
 /////////// FILTER //////////////
 router.post('/filtertask', async(req, res) => {
     const {ftask, ftasktype, isCompletedtrue, isfalse} = req.body;
-    console.log(req.body);
 
     var rtask = new RegExp(ftask, 'i');
 

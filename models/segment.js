@@ -22,15 +22,6 @@ var segmentSchema = new mongoose.Schema({
         campaigns : [{
             type:String
         }],
-        ecommerceValue : {
-            type:String
-        },             
-        ecommerceMatch : {
-            type:String
-        },
-        ecommerce : [{
-            type:String
-        }],
         tagsMatch : {
             type:String
         },

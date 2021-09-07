@@ -18,7 +18,6 @@ router.get('/', (req,res)=>{
 /////////// FILTER //////////////
 router.post('/filter', async(req, res) => {
     const {author, cname, curl, tech, stype} = req.body;
-    console.log(req.body, "mainfilter");
 
     var rauthor = new RegExp(author, 'i');
     var rcname = new RegExp(cname, 'i');
@@ -39,7 +38,6 @@ router.post('/filter', async(req, res) => {
 /////////// FILTER TAGS//////////////
 router.get('/tagsleads/:tagName', (req, res) => {
     const tagName = req.params.tagName;
-    console.log(req.params);
 
     var rtagName = new RegExp(tagName, 'i');
     leads.find()
@@ -52,6 +50,23 @@ router.get('/tagsleads/:tagName', (req, res) => {
     });
 
 });
+
+
+/////////// FILTER SEGMENT TAGS//////////////
+// router.get('/segmenttags', (req, res) => {
+//     const tagName = req.params.tagName;
+
+//     var rtagName = new RegExp(tagName, 'i');
+//     leads.find()
+//     .and([{'tags': { $regex: rtagName }}])
+//     .exec((err,docs) => { 
+//         if (!err) { 
+//             res.send(docs);
+//             }	
+//         else { console.log('Error in retriving data:'+JSON.stringify(err,undefined,2))};
+//     });
+
+// });
 
 ///////////GETBYID///////////////
 router.get('/:id', auth, (req, res) => {
@@ -67,7 +82,6 @@ router.get('/:id', auth, (req, res) => {
 /////////// POST ///////////////
 router.post('/', auth, (req, res) => {
     const post = req.body;
-    console.log(post)
     const lead = new leads({...post, creator: req.userId, createdAt: new Date().toISOString()})
     // var lead = new leads({
     //     companyname : req.body.companyname,
@@ -118,7 +132,8 @@ router.put('/:id', auth, (req,res) => {
         estimates : req.body.estimates,
         projectDuration : req.body.projectDuration,
         timeZone : req.body.timeZone,
-        tags : req.body.tags
+        tags : req.body.tags,
+        subscribed : req.body.subscribed
     };   
     leads.findByIdAndUpdate(req.params.id,{$set:lead},{new:true}, (err,doc)=>{
         if(!err) {res.send(doc);}

@@ -20,7 +20,6 @@ router.get('/', (req,res)=>{
 //get user aws details
 getAwsDetail = async (req, res) => {
     let name = req.params.name;
-    console.log(name)
     let hiddenResponseVariables = {
         "__v": 0,
         "createdAt": 0
@@ -62,7 +61,6 @@ router.get('/:id', auth, (req, res) => {
 /////////// POST ///////////////
 router.post('/', auth, (req, res) => {
     const post = req.body;
-    console.log(post)
     const awsDetails = new aws({...post, creator: req.userId, createdAt: new Date().toISOString()})
 
     awsDetails.save((err, doc) => {
@@ -103,7 +101,6 @@ router.delete('/:id', auth, (req,res)=>{
 // /////////// FILTER //////////////
 // router.post('/filteraws', async(req, res) => {
 //     const {faws} = req.body;
-//     console.log(req.body);
 
 //     var raws = new RegExp(ftag, 'i');
 
@@ -112,7 +109,6 @@ router.delete('/:id', auth, (req,res)=>{
 //     .exec((err,docs) => { 
 //         if (!err) { 
 //             res.send(docs);
-//             console.log(docs)
 //             }	
 //         else { console.log('Error in retriving data:'+JSON.stringify(err,undefined,2))};
 //     });

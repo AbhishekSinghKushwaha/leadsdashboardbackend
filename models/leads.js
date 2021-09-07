@@ -90,6 +90,10 @@ var leadsSchema = new mongoose.Schema({
     tags : [{
         type:String
     }],
+    subscribed : {
+        type:String,
+        required: true
+    },
     createdAt: {
         type:Date,
         default: Date.now

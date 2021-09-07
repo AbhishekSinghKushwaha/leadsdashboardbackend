@@ -30,7 +30,7 @@ router.get('/:id', (req, res) => {
 /////////// POST ///////////////
 router.post('/', (req, res) => {
     const post = req.body;
-    console.log(post)
+
     const campaigns = new campaign({...post, creator: req.userId, createdAt: new Date().toISOString()}) 
     campaigns.save((err, doc) => {
         if (!err) { res.send(doc); }
@@ -44,7 +44,6 @@ router.post('/', (req, res) => {
 /////////// FILTER //////////////
 router.post('/filtercampaign', async(req, res) => {
     const {fcampaign} = req.body;
-    console.log(req.body);
 
     var rcampaign = new RegExp(fcampaign, 'i');
 
@@ -53,7 +52,6 @@ router.post('/filtercampaign', async(req, res) => {
     .exec((err,docs) => { 
         if (!err) { 
             res.send(docs);
-            console.log(docs)
             }	
         else { console.log('Error in retriving data:'+JSON.stringify(err,undefined,2))};
     });
